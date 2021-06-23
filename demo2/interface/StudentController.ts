@@ -1,5 +1,6 @@
 interface IStudentController {
     init():void;
+    consoleStydentGetLearn():void;
 }
 
 export {

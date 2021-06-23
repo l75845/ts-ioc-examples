@@ -8,13 +8,13 @@ function getParams(constructor: Function) {
   if (node.type === 'FunctionDeclaration') {
     funParams = node.params;
   }
-  const validParam = [];
-  funParams.map((node) => {
-    if (node.type === 'Identifier') {
-      validParam.push(node.name);
-    }
-  });
-  return validParam;
+  // const validParam = [];
+  // funParams.map((node) => {
+  //   if (node.type === 'Identifier') {
+  //     validParam.push(node.name);
+  //   }
+  // });
+  return funParams;
 }
 
 function inject(nameSpace: Symbol) {
@@ -31,9 +31,9 @@ function injectTable<T extends { new (...args: any[]) }>(constructor: T) {
       super(args);
       const _fnParams = getParams(constructor);
       let i = 0;
-      for (;i < _fnParams.length; ++i) {
-        const name = _fnParams[i];
-        if (Reflect.hasMetadata(i, constructor)) {
+      for (; i < _fnParams.length; ++i) {
+        const { name, type } = _fnParams[i];
+        if (type === 'Identifier' && Reflect.hasMetadata(i, constructor)) {
           this[name] = Reflect.getMetadata(i, constructor);
         }
       }

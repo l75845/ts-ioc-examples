@@ -16,4 +16,6 @@ container.loadInject(resolve(__dirname, './service/*.ts'));
 container.loadInject(resolve(__dirname, './controller/*.ts'));
 
 
-container.get<IStudentController>(Symbol.for('StudentController')).init();
+const sController = container.get<IStudentController>(Symbol.for('StudentController'));
+sController.init();
+sController.consoleStydentGetLearn();
